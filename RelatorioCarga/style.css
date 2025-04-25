@@ -1,0 +1,140 @@
+/* RESET BÁSICO E AJUSTES GERAIS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* TÍTULO CENTRALIZADO */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+  font-size: 1.8rem;
+}
+
+/* AVISO INFORMATIVO */
+.aviso {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px 20px;
+  border-left: 6px solid #333;
+  background-color: #e7f3fe;
+  color: #31708f;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+/* TABELA RESPONSIVA COM CÉLULAS AJUSTÁVEIS */
+table {
+  display: block;               /* permite overflow em telas pequenas */
+  width: 100%;                  /* ocupa toda a largura do container */
+  table-layout: fixed;          /* distribui colunas igualmente */
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 8px;
+  overflow-x: auto;             /* scroll horizontal se necessário */
+  margin: 20px auto;
+}
+
+thead, tbody, tr {
+  display: table;               /* mantém o comportamento de tabela */
+  width: 100%;
+  table-layout: fixed;          /* herda table-layout do pai */
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;        /* quebra palavra longa */
+  white-space: normal;          /* permite quebra de linha */
+  font-size: 0.95rem;
+}
+
+/* Headers fixos e contrastantes */
+thead th {
+  background: #333;
+  color: #fff;
+  position: sticky;             /* fixa o header ao rolar */
+  top: 0;
+  z-index: 2;
+}
+
+/* Hover de linha */
+tbody tr:hover {
+  background: #f1f1f1;
+}
+
+/* Ajuste de font e espaçamento em mobile */
+@media (max-width: 600px) {
+  th, td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* MENSAGEM DE ERRO */
+.erro {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* GRÁFICO - CONTAINER E CANVAS */
+.grafico-wrapper {
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.grafico-container {
+  max-width: 100%;
+  width: 95%;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+#graficoComparativo {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* MEDIA QUERIES PARA MELHORAR EM TELAS MENORES */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .aviso {
+    padding: 12px 15px;
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .grafico-container {
+    padding: 15px;
+  }
+}

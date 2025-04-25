@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora de Margem para E-commerce - Analise sua rentabilidade em diferentes plataformas">
+    <title>Calculadora de Margem - E-commerce</title>
+    <link rel="stylesheet" href="style..css">
+    <!-- Adicione a fonte Inter do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="calculator-container">
+        <header class="calculator-header">
+            <h1>📈 Calculadora de Margem</h1>
+            <p class="subtitle">Calcule a rentabilidade real de seus produtos</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-group">
+                <label for="produto" class="input-label">🔖 Nome do Produto</label>
+                <input type="text" id="produto" class="input-field" required 
+                       placeholder="Ex: Produto xyz">
+            </div>
+
+            <div class="input-group">
+                <label for="precoCusto" class="input-label">💵 Preço de Custo</label>
+                <input type="number" id="precoCusto" class="input-field" step="0.01" 
+                       required placeholder="R$ 00,00">
+            </div>
+
+            <div class="input-group">
+                <label for="precoVenda" class="input-label">🏷️ Preço de Venda</label>
+                <input type="number" id="precoVenda" class="input-field" step="0.01" 
+                       required placeholder="R$ 00,00">
+            </div>
+
+            <div class="input-group">
+                <label for="imposto" class="input-label">🏛️ Imposto (%):</label>
+                <input type="number" id="imposto" class="input-field" step="0.0001" 
+                       required placeholder="Ex: 1.08 para 1,08%">
+            </div>
+
+            <div class="input-group">
+                <label for="plataforma" class="input-label">🛒 Plataforma</label>
+                <select id="plataforma" class="input-field">
+                    <option value="shopee">Shopee</option>
+                    <option value="amazon">Amazon</option>
+                </select>
+            </div>
+        </section>
+
+        <div class="button-group">
+            <button onclick="calcularMargem()" class="primary-button">
+                📊 Calcular Margem
+            </button>
+            <button onclick="gerarRelatorioPDF()" class="pdf-button">
+                🗎 Gerar Relatório
+            </button>
+        </div>
+
+        <section class="result-section">
+            <div class="result-header">
+                <h2>📋 Resultados da Análise</h2>
+                <div class="status-indicator" aria-live="polite"></div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="simulation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Margem (R$)</th>
+                            <th scope="col">Margem (%)</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultado" class="result-body"></tbody>
+                </table>
+            </div>
+
+            <h3 class="simulation-title">🎯 Simulação de Cenários</h3>
+            <div class="table-wrapper">
+                <table class="simulation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Desconto</th>
+                            <th scope="col">Preço Final</th>
+                            <th scope="col">Lucro</th>
+                            <th scope="col">Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="simulacao" class="simulation-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

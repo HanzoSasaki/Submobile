@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Erros</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+   
+  <main class="container">
+    <section class="filters-section">
+      <div class="filter-group">
+        <label for="dataRange">Período:</label>
+        <input type="text" id="dataRange" class="date-input" placeholder="Selecione datas" readonly>
+        <select id="filtroLoja"></select>
+        <button onclick="filtrarTabela()" class="button">Filtrar</button>
+      </div>
+     
+      <div class="filter-group">
+        <button onclick="abrirModalPDF()" class="button pdf-button">
+          <span class="icon">📄</span> Gerar PDF
+        </button>
+      </div>
+    </section>
+
+    <section class="data-section">
+      <div class="table-container">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Data</th>
+              <th scope="col">Motivo</th>
+              <th scope="col">Especificação</th>
+              <th scope="col">Status</th>
+              <th scope="col">Loja</th>
+              <th scope="col">Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados dinâmicos -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-card">
+        <h2 class="chart-title">Distribuição de Erros</h2>
+        <div class="chart-container">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Configuração PDF -->
+  <div id="modalPDF" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Configurar Relatório</h2>
+        <span class="close" onclick="fecharModalPDF()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="filtroLoja">Loja:</label>
+          <select id="filtroLoja" class="form-control">
+            <option value="">Todas Lojas</option>
+            <option value="Armazem 4pshopping">Armazem 4pshopping</option>
+            <option value="Fastshop">Fastshop</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dataPDF">Período:</label>
+          <input type="text" id="dataPDF" class="date-input" placeholder="Selecione datas" readonly>
+        </div>
+        
+        <button onclick="previewPDF()" class="button preview-button">
+          Visualizar PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Pré-visualização PDF -->
+  <div id="modalPreview" class="modal">
+    <div class="modal-content wide-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Pré-visualização</h2>
+        <span class="close" onclick="fecharPreviewPDF()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <iframe id="previewPDF" class="pdf-preview"></iframe>
+        <div class="modal-actions">
+          <button onclick="salvarPDF()" class="button save-button">Salvar PDF</button>
+          <button onclick="fecharPreviewPDF()" class="button cancel-button">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Dependências -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+
+  <!-- Aplicação -->
+  <script src="script.js"></script>
+</body>
+</html>

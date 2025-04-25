@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Financeiro Diário</title>
+
+  <!-- Estilos e bibliotecas -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+
+  <main class="container">
+    <section class="config">
+      <button id="reload-btn">Filtrar Data</button>
+      <input id="date-range" type="text" placeholder="Selecione intervalo de datas" disabled />
+    </section>
+
+    <section id="charts-section">
+        <div class="chart-section">
+          <h3>Comparativo por Loja</h3>
+          <div class="chart-group">
+            <div class="chart-card"><canvas id="chart-4p"></canvas><p>4PShopping: Líq x Bruto</p></div>
+            <div class="chart-card"><canvas id="chart-fast"></canvas><p>Fastshop: Líq x Bruto</p></div>
+            <div class="chart-card"><canvas id="chart-armazem"></canvas><p>Armazém: Líq x Bruto</p></div>
+          </div>
+        </div>
+      
+        <div class="chart-section">
+          <h3>Comparação Entre Lojas</h3>
+          <div class="comparison-group">
+            <div class="chart-card"><canvas id="chart-net-compare"></canvas><p>Comparação Líquido</p></div>
+            <div class="chart-card"><canvas id="chart-gross-compare"></canvas><p>Comparação Bruto</p></div>
+            
+          </div>
+        </div>
+      
+        <div class="chart-section">
+          <h3>Participação Percentual</h3>
+          <div class="chart-group">
+            <div class="chart-card"><canvas id="chart-net-share"></canvas><p>Participação % Líquido</p></div>
+            <div class="chart-card"><canvas id="chart-gross-share"></canvas><p>Participação % Bruto</p></div>
+          </div>
+        </div>
+      </section>
+
+
+          <!-- Nova seção: Evolução da Margem Líquida -->
+    <div class="chart-section">
+        <h3>Evolução da Margem Líquida (%)</h3>
+        <div class="chart-group">
+          <div class="chart-card">
+            <canvas id="chart-margin-evolution"></canvas>
+            <p>Margem Líquida ao Longo do Tempo</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Nova seção: Pizza de Participação Acumulada -->
+      <div class="chart-section">
+        <h3>Participação Acumulada</h3>
+        <div class="chart-group">
+          <div class="chart-card">
+            <canvas id="chart-pie-net"></canvas>
+            <p>Total Líquido (%)</p>
+          </div>
+          <div class="chart-card">
+            <canvas id="chart-pie-gross"></canvas>
+            <p>Total Bruto (%)</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Nova seção: Comparativo Bruto x Líquido -->
+      <div class="chart-section">
+        <h3>Bruto vs. Líquido (Total no Período)</h3>
+        <div class="chart-group">
+          <div class="chart-card">
+            <canvas id="chart-bruto-vs-liquido"></canvas>
+            <p>Bruto x Líquido por Loja</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Nova seção: Margem Líquida Média -->
+      <div class="chart-section">
+        <h3>Margem Líquida Média (%)</h3>
+        <div class="chart-group">
+          <div class="chart-card">
+            <canvas id="chart-margin-average"></canvas>
+            <p>Margem Média por Loja</p>
+          </div>
+        </div>
+      </div>
+  
+  </main>
+
+
+</body>
+</html>

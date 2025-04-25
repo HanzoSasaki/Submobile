@@ -1,0 +1,228 @@
+/* ===== Mobile-First & Variáveis ===== */
+:root {
+    --main-color: #333;
+    --bg-color: #f8f9fa;
+    --accent-color: #333;
+    --section-bg: #ffffff;
+  
+    /* Tipografia fluida */
+    --fz-base: clamp(1rem, 1.2vw, 1.125rem);
+    --fz-heading: clamp(1.25rem, 2.5vw, 2rem);
+  
+    /* Espaçamentos responsivos */
+    --gap: clamp(0.5rem, 1.5vw, 2rem);
+    --pad-container: clamp(1rem, 2vw, 2rem);
+    --pad-section: clamp(1rem, 2.5vw, 2.5rem);
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: var(--fz-base);
+    background-color: var(--bg-color);
+    color: var(--main-color);
+  }
+  
+  /* ===== Container Geral ===== */
+  .container {
+    flex: 1;
+    width: min(95%, 1400px);
+    margin: 0 auto;
+    padding: var(--pad-container);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  
+  /* ===== Header & Footer ===== */
+  header {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: var(--pad-container);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  footer {
+    background-color: var(--main-color);
+    color: #fff;
+    text-align: center;
+    padding: var(--pad-container);
+    margin-top: auto;
+  }
+  
+  /* ===== Seções de Gráficos ===== */
+  .chart-section {
+    background: var(--section-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: var(--pad-section);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  
+  .chart-section h3 {
+    font-size: var(--fz-heading);
+    margin: 0;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--accent-color);
+  }
+  
+  /* ===== Grades Flexíveis ===== */
+  .chart-group,
+  .comparison-group {
+    display: grid;
+    gap: var(--gap);
+  }
+  
+  .chart-group {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .comparison-group {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  
+  /* ===== Cartões de Gráficos ===== */
+  .chart-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: var(--pad-section);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  
+  .chart-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .chart-card canvas {
+    width: 100% !important;
+    height: auto !important;
+    flex: 1;
+  }
+  
+  .chart-card p {
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+    color: #666;
+  }
+  
+  /* ===== Controles ===== */
+/* Estilização aprimorada para a seção de configuração */
+.config {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    background: var(--section-bg);
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Botão Recarregar Dados */
+  .config button {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: clamp(0.5rem, 1.2vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .config button:hover {
+    background-color: shade(var(--accent-color), 15%);
+  }
+  
+  .config button:active {
+    transform: translateY(1px);
+  }
+  
+  /* Campo de Seleção de Datas */
+  .config input#date-range {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    padding: clamp(0.5rem, 1.2vw, 0.75rem);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  
+  .config input#date-range:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: #fff;
+  }
+  
+  /* Placeholder mais discreto */
+  .config input#date-range::placeholder {
+    color: #999;
+  }
+  
+  /* Responsividade: empilha em telas pequenas */
+  @media (max-width: 480px) {
+    .config {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .config button,
+    .config input#date-range {
+      width: 100%;
+    }
+  }
+  
+  
+  /* ===== Breakpoints Específicos ===== */
+  /* Médio: tablets e desktops mais estreitos */
+  @media (min-width: 768px) {
+    .chart-group {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    .comparison-group {
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+  }
+  
+  /* Grande: desktops maiores */
+  @media (min-width: 1200px) {
+    .chart-group {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .comparison-group {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Ajustes para telas super largas */
+  @media (min-width: 1800px) {
+    :root {
+      --pad-container: 3rem;
+      --pad-section: 3rem;
+      --gap: 3rem;
+    }
+  }
+  

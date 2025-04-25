@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Vendas - Controle Financeiro</title>
+    
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="meia.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <!-- Botão Scroll to Top -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="container">
+        <!-- Seção de Filtros -->
+        <div id="filtroContainer">
+            <h2>Análise de Vendas Diárias</h2>
+            <input type="text" id="seletorData" placeholder="Selecione o período">
+            
+            <!-- Resumo Financeiro -->
+            <div id="resumoPeriodo">
+                <h3>Resumo Financeiro</h3>
+                <div class="resumo-grid">
+                    <div class="resumo-item">
+                        <h3>Total de Pedidos</h3>
+                        <p id="totalVendas">0</p>
+                    </div>
+                    <div class="resumo-item">
+                        <h3>Margem Líquida Total</h3>
+                        <p id="margemTotal">R$ 0,00</p>
+                    </div>
+                    <div class="resumo-item">
+                        <h3>Lucro Bruto Total</h3>
+                        <p id="lucroBruto">R$ 0,00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Resultados -->
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Produto</th>
+                    <th>Variação</th>
+                    <th>Quantidade</th>
+                    <th>Loja</th>
+                    <th>Custo (R$)</th>
+                    <th>Preço Venda (R$)</th>
+                    <th>Margem Líquida</th>
+                    <th>Margem %</th>
+                    <th>Data</th>
+                    <th>Avaliação</th>
+                  
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Dados serão inseridos via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="meia.js"></script>
+</body>
+</html>
