@@ -66,18 +66,20 @@ function calcularPrecoML() {
 }
 
 function calcularFrete() {
-  let metodo = document.getElementById("metodoEnvio").value; // "full" ou "outros"
+  let metodo = document.getElementById("metodoEnvio").value;
   let intervalo = document.getElementById("intervaloEnvio").value;
   let frete = shippingFees[intervalo][metodo];
 
-  // Para produtos com preço base ≥ R$79,90:
-  // Preço Final = (Preço Base + Frete) - 6,75
   let finalComum = basePrecoComum + frete - 6.75;
   let finalPremium = basePrecoPremium + frete - 6.75;
 
+  // Novo formato com destaque para o frete
   let resultadoFinal =
-    "Preço Final Produto Comum: R$ " + finalComum.toFixed(2) + "\n" +
-    "Preço Final Produto Premium: R$ " + finalPremium.toFixed(2);
+    `Preço Final Comum (COM FRETE): R$ ${finalComum.toFixed(2)} ` +
+    `(| Frete: R$ ${frete.toFixed(2)})\n` +
+    `Preço Final Premium (COM FRETE): R$ ${finalPremium.toFixed(2)} ` +
+    `(| Frete: R$ ${frete.toFixed(2)})`;
+
   document.getElementById("resultadoFinal").innerText = resultadoFinal;
 }
 

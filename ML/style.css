@@ -43,7 +43,7 @@ header a.home-button img {
 
 /* Container principal centralizado */
 main {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -51,7 +51,7 @@ main {
 /* Estilo da calculadora */
 .calculator {
   background: #fff;
-  padding: 20px;
+  padding: 25px;
   margin: 20px 0;
   border: 1px solid #ddd; /* Cor da borda */
   border-radius: 5px;
@@ -81,14 +81,14 @@ button {
 }
 
 button {
-  background-color: #007BFF; /* Azul do botão */
+  background-color: #333; /* Azul do botão */
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3; /* Azul mais escuro no hover */
+  background-color: #333; /* Azul mais escuro no hover */
 }
 
 #resultadoBase,
@@ -129,7 +129,7 @@ footer {
 }
 
 .modal-button {
-  background-color: #007BFF; /* Azul do botão */
+  background-color: #333; /* Azul do botão */
   color: white;
   padding: 8px 16px; /* Diminuindo o tamanho do botão */
   font-size: 14px; /* Reduzindo a fonte */
@@ -143,7 +143,7 @@ footer {
 }
 
 .modal-button:hover {
-  background-color: #0056b3; /* Azul mais escuro no hover */
+  background-color: #333; /* Azul mais escuro no hover */
   transform: scale(1.05); /* Pequeno efeito de aumento */
 }
 
