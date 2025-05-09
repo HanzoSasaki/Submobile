@@ -8,74 +8,107 @@
 </head>
 <body>
   <div class="calculator">
-    <h1>📈 Calculadora Mercado Livre</h1>
-
+    <div class="header-container">
+      <h1>📈 Calculadora Mercado Livre</h1>
+      <button onclick="openPromoModal()" class="promo-button">🏷️ Cálculo de Promoções</button>
+    </div>
+    <br>
+    <br>
     <div class="field-group">
-        <div class="field">
-            <label for="tipoML">Tipo de Conta ML</label>
-            <select id="tipoML">
-                <option value="comum">Comum (14%)</option>
-                <option value="premium">Premium (18%)</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <label for="custo">Custo do Produto (R$)</label>
-            <input type="number" id="custo" step="0.01" min="0" required>
-        </div>
+      <div class="field">
+        <label for="tipoML">Tipo de Conta ML</label>
+        <select id="tipoML">
+          <option value="comum">Comum (14%)</option>
+          <option value="premium">Premium (18%)</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label for="custo">Custo do Produto (R$)</label>
+        <input type="number" id="custo" step="0.01" min="0" required>
+      </div>
     </div>
 
     <div class="field-group">
-        <div class="field">
-            <label for="taxaPedido">Taxa Fixa por Pedido (R$)</label>
-            <input type="number" id="taxaPedido" step="0.01" value="6.75" min="0">
-        </div>
+      <div class="field">
+        <label for="taxaPedido">Taxa Fixa por Pedido (R$)</label>
+        <input type="number" id="taxaPedido" step="0.01" value="6.75" min="0">
+      </div>
 
-        <div class="field">
-            <label for="percOperacional">% Custos Operacionais</label>
-            <input type="number" id="percOperacional" step="0.01" min="0" max="100">
-        </div>
+      <div class="field">
+        <label for="percOperacional">% Custos Operacionais</label>
+        <input type="number" id="percOperacional" step="0.01" min="0" max="100">
+      </div>
     </div>
 
     <div class="field-group">
-        <div class="field">
-            <label for="margem">Margem Líquida Desejada (%)</label>
-            <input type="number" id="margem" step="0.01" min="0" max="100" required>
-        </div>
+      <div class="field">
+        <label for="margem">Margem Líquida Desejada (%)</label>
+        <input type="number" id="margem" step="0.01" min="0" max="100" required>
+      </div>
     </div>
 
-    <button onclick="calcularBase()">Calcular Preço Base</button>
+    <button onclick="calcularBase()" class="calculate-button">Calcular Preço Base</button>
 
     <div class="results" id="resultadoBase"></div>
     <div class="warning" id="avisoCalculo"></div>
 
     <div class="shipping-section" id="areaFrete">
-        <h2>✈️ Configurações de Frete</h2>
+      <h2>✈️ Configurações de Frete</h2>
 
-        <div class="field-group">
-            <div class="field">
-                <label for="intervaloEnvio">Faixa de Peso</label>
-                <select id="intervaloEnvio"></select>
-            </div>
-
-            <div class="field">
-                <label for="metodoEnvio">Método de Envio</label>
-                <select id="metodoEnvio">
-                    <option value="full">Full</option>
-                    <option value="outros">Outros</option>
-                </select>
-            </div>
+      <div class="field-group">
+        <div class="field">
+          <label for="intervaloEnvio">Faixa de Peso</label>
+          <select id="intervaloEnvio"></select>
         </div>
 
-        <button onclick="calcularComFrete()">Calcular Preço Final</button>
-        <div class="results" id="resultadoFinal"></div>
-        <div class="warning" id="avisoFrete"></div>
+        <div class="field">
+          <label for="metodoEnvio">Método de Envio</label>
+          <select id="metodoEnvio">
+            <option value="full">Full</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="calcularComFrete()" class="calculate-button">Calcular Preço Final</button>
+      <div class="results" id="resultadoFinal"></div>
+      <div class="warning" id="avisoFrete"></div>
     </div>
-</div>
+  </div>
 
+  <!-- Modal DEVE ficar FORA do container principal -->
+  <div id="promoModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePromoModal()">&times;</span>
+      <h2>🎯 Calculadora de Promoções</h2>
+      
+      <div class="field-group">
+        <div class="field">
+          <label for="promoCusto">Custo do Produto (R$)</label>
+          <input type="number" id="promoCusto" step="0.01" required>
+        </div>
+        <div class="field">
+          <label for="promoPreco">Preço de Venda (R$)</label>
+          <input type="number" id="promoPreco" step="0.01" required>
+        </div>
+      </div>
 
-  <script src="script.js">
-   
-  </script>
+      <div class="field">
+        <label for="promoTipo">Tipo de Conta</label>
+        <select id="promoTipo">
+          <option value="comum">Comum</option>
+          <option value="premium">Premium</option>
+        </select>
+      </div>
+
+      <button onclick="calcularPromocao()" class="calculate-button">Calcular Viabilidade</button>
+      
+      <div class="results" id="resultadoPromo" style="margin-top: 20px"></div>
+      <div class="warning" id="avisoPromo"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

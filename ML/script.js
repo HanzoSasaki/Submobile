@@ -48,7 +48,7 @@ function calcularBase() {
   const taxaPedido = parseFloat(document.getElementById('taxaPedido').value) || 0;
   const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
   const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
-  const comissao = tipo === 'comum' ? 0.14 : 0.18;
+  const comissao = tipo === 'comum' ? 0.15 : 0.18;
   const imposto = 0.1008;
 
 
@@ -82,7 +82,7 @@ function calcularBase() {
   <tr><td>Custo</td><td>${formatCurrency(custo)}</td><td>-</td></tr>
   <tr><td>Taxa Pedido</td><td>${formatCurrency(taxaPedido)}</td><td>-</td></tr>
   <tr><td>Comissão</td><td>${formatCurrency(precoBase * comissao)}</td><td>${(comissao * 100).toFixed(1)}%</td></tr>
-  <tr><td>Impostos</td><td>${formatCurrency(precoBase * imposto)}</td><td>10%</td></tr>
+  <tr><td>Impostos</td><td>${formatCurrency(precoBase * imposto)}</td><td>10,08%</td></tr>
   <tr><td>Operacional</td><td>${formatCurrency(precoBase * percOp)}</td><td>${(percOp * 100).toFixed(1)}%</td></tr>
   <tr><td>Margem Líquida</td><td>${formatCurrency(precoBase * margemDesejada)}</td><td>${(margemDesejada * 100).toFixed(1)}%</td></tr>
 </tbody>
@@ -104,7 +104,7 @@ function calcularComFrete() {
   const taxaPedido = parseFloat(document.getElementById('taxaPedido').value) || 0;
   const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
   const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
-  const comissao = tipo === 'comum' ? 0.14 : 0.18;
+  const comissao = tipo === 'comum' ? 0.15 : 0.18;
   const imposto = 0.1008;
 
 
@@ -138,3 +138,100 @@ function calcularComFrete() {
       avisoFrete.style.display = 'none';
   }
 }
+
+function openPromoModal() {
+      document.getElementById('promoModal').style.display = 'flex';
+    }
+
+    function closePromoModal() {
+      document.getElementById('promoModal').style.display = 'none';
+    }
+
+    function calcularPromocao() {
+      const custo = parseFloat(document.getElementById('promoCusto').value) || 0;
+      const precoOriginal = parseFloat(document.getElementById('promoPreco').value) || 0;
+      const tipo = document.getElementById('promoTipo').value;
+      const taxaPedido = parseFloat(document.getElementById('taxaPedido').value) || 0;
+      const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
+      
+      const comissao = tipo === 'comum' ? 0.15 : 0.18;
+      const imposto = 0.1008;
+      const descontos = [5, 10, 15, 20, 25, 30]; // Percentuais de desconto
+
+      let tabelaHTML = `
+          <table class="tabela-promo">
+              <thead>
+                  <tr>
+                      <th>Desconto</th>
+                      <th>Preço Promo</th>
+                      <th>Margem %</th>
+                      <th>Margem R$</th>
+                  </tr>
+              </thead>
+              <tbody>`;
+
+      descontos.forEach(desconto => {
+          const precoPromo = precoOriginal * (1 - desconto/100);
+          const custoTotal = custo + taxaPedido;
+          const margemPercentual = ((precoPromo - custoTotal)/precoPromo - (comissao + imposto + percOp)) * 100;
+          const margemReais = precoPromo * (margemPercentual/100);
+
+          if(margemPercentual >= 0) {
+              tabelaHTML += `
+                  <tr class="linha-positiva">
+                      <td>${desconto}%</td>
+                      <td>${formatCurrency(precoPromo)}</td>
+                      <td>${margemPercentual.toFixed(2)}%</td>
+                      <td>${formatCurrency(margemReais)}</td>
+                  </tr>`;
+          }
+      });
+
+      const custoTotal = custo + taxaPedido;
+      const descontoMaximo = ((precoOriginal - (custoTotal / (1 - (comissao + imposto + percOp)))) / precoOriginal) * 100;
+      
+      if(descontoMaximo > 0) {
+          const precoMinimo = custoTotal / (1 - (comissao + imposto + percOp));
+          tabelaHTML += `
+              <tr style="background-color: #e3f2fd">
+                  <td><strong>${descontoMaximo.toFixed(2)}%</strong></td>
+                  <td>${formatCurrency(precoMinimo)}</td>
+                  <td>0.00%</td>
+                  <td>${formatCurrency(0)}</td>
+              </tr>`;
+      }
+
+      tabelaHTML += `</tbody></table>`;
+
+      const resultadoHTML = `
+          <div class="result-item">
+              <span>Preço Original:</span>
+              <span class="result-value">${formatCurrency(precoOriginal)}</span>
+          </div>
+          ${tabelaHTML}
+      `;
+
+      document.getElementById('resultadoPromo').innerHTML = resultadoHTML;
+      document.getElementById('avisoPromo').style.display = 'none';
+  }
+      document.getElementById('resultadoPromo').innerHTML = resultadoHTML;
+
+      const aviso = document.getElementById('avisoPromo');
+      if(margem < 0) {
+        aviso.innerHTML = '⚠️ Promoção inviável! O preço está abaixo dos custos';
+        aviso.style.display = 'block';
+      } else if(margem < 5) {
+        aviso.innerHTML = '⚠️ Margem baixa! Considere aumentar o preço ou reduzir custos';
+        aviso.style.display = 'block';
+      } else {
+        aviso.style.display = 'none';
+      }
+    
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+      const modal = document.getElementById('meuModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
