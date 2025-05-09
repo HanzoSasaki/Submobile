@@ -1,4 +1,3 @@
-// Valores atualizados dos fretes conforme intervalo e método
 const shippingFees = {
   "Até 300 g": { full: 19.95, outros: 31.45 },
   "De 300 g a 500 g": { full: 21.45, outros: 34.05 },
@@ -24,87 +23,116 @@ const shippingFees = {
   "Maior que 150 kg": { full: 249.45, outros: 273.05 }
 };
 
-// Variáveis globais para armazenar os preços base
-let basePrecoComum = 0;
-let basePrecoPremium = 0;
+// Popular faixas de peso
+const selIntervalo = document.getElementById('intervaloEnvio');
+Object.keys(shippingFees).forEach(key => {
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = key;
+  selIntervalo.appendChild(opt);
+});
 
-function calcularPrecoML() {
-  let custo = parseFloat(document.getElementById("custo").value) || 0;
-  let margemPercent = parseFloat(document.getElementById("margem").value) || 0;
-  let margem = margemPercent / 100;
-  let imposto = 0.065; // Imposto fixo de 6,5%
+let precoBase = 0;
 
-  // Validação: a soma da margem, comissão e imposto deve ser inferior a 100%
-  if (margem + 0.14 + imposto >= 1 || margem + 0.18 + imposto >= 1) {
-    alert("A soma da margem, comissão e imposto deve ser inferior a 100%.");
-    return;
+function formatCurrency(value) {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+}
+
+function calcularBase() {
+  // Reset warnings
+  document.getElementById('avisoCalculo').style.display = 'none';
+
+  // Valores de entrada
+  const tipo = document.getElementById('tipoML').value;
+  const custo = parseFloat(document.getElementById('custo').value) || 0;
+  const taxaPedido = parseFloat(document.getElementById('taxaPedido').value) || 0;
+  const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
+  const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
+  const comissao = tipo === 'comum' ? 0.14 : 0.18;
+  const imposto = 0.065;
+
+  // Validação
+  const totalPercent = comissao + imposto + percOp + margemDesejada;
+  if (totalPercent >= 1) {
+      document.getElementById('avisoCalculo').innerHTML =
+          `❌ Soma de porcentagens ultrapassa 100% (${(totalPercent * 100).toFixed(1)}%)`;
+      document.getElementById('avisoCalculo').style.display = 'block';
+      return;
   }
 
-  // Cálculo do preço base considerando imposto de 6,5%
-  basePrecoComum = custo / (1 - (margem + 0.14 + imposto));
-  basePrecoPremium = custo / (1 - (margem + 0.18 + imposto));
+  // Cálculo preciso
+  precoBase = (custo + taxaPedido) / (1 - totalPercent);
 
-  let resultadoBase =
-    "Preço Base Produto Comum: R$ " + basePrecoComum.toFixed(2) + "\n" +
-    "Preço Base Produto Premium: R$ " + basePrecoPremium.toFixed(2);
-  document.getElementById("resultadoBase").innerText = resultadoBase;
+  // Exibir resultados
+  const resultadoHTML = `
+<div class="result-item">
+<span>Preço Base:</span>
+<span class="result-value">${formatCurrency(precoBase)}</span>
+</div>
+<div class="result-item">
+<span>Tipo:</span>
+<span>${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</span>
+</div>
+<table class="data-table">
+<thead>
+  <tr><th>Item</th><th>Valor</th><th>%</th></tr>
+</thead>
+<tbody>
+  <tr><td>Custo</td><td>${formatCurrency(custo)}</td><td>-</td></tr>
+  <tr><td>Taxa Pedido</td><td>${formatCurrency(taxaPedido)}</td><td>-</td></tr>
+  <tr><td>Comissão</td><td>${formatCurrency(precoBase * comissao)}</td><td>${(comissao * 100).toFixed(1)}%</td></tr>
+  <tr><td>Impostos</td><td>${formatCurrency(precoBase * imposto)}</td><td>6.5%</td></tr>
+  <tr><td>Operacional</td><td>${formatCurrency(precoBase * percOp)}</td><td>${(percOp * 100).toFixed(1)}%</td></tr>
+  <tr><td>Margem Líquida</td><td>${formatCurrency(precoBase * margemDesejada)}</td><td>${(margemDesejada * 100).toFixed(1)}%</td></tr>
+</tbody>
+</table>
+`;
 
-  // Se o preço base for menor que R$79,90: aplica taxa fixa de R$6,75
-  if (basePrecoComum < 79.90) {
-    let finalComum = basePrecoComum + 6.75;
-    let finalPremium = basePrecoPremium + 6.75;
-    document.getElementById("resultadoFinal").innerText =
-      "Preço Final Produto Comum: R$ " + finalComum.toFixed(2) + "\n" +
-      "Preço Final Produto Premium: R$ " + finalPremium.toFixed(2);
-    document.getElementById("areaFrete").style.display = "none";
+  document.getElementById('resultadoBase').innerHTML = resultadoHTML;
+  document.getElementById('areaFrete').style.display = precoBase > 79 ? 'block' : 'none';
+}
+
+function calcularComFrete() {
+  const intervalo = document.getElementById('intervaloEnvio').value;
+  const metodo = document.getElementById('metodoEnvio').value;
+  const frete = shippingFees[intervalo][metodo];
+
+  // Recalcular com frete
+  const tipo = document.getElementById('tipoML').value;
+  const custo = parseFloat(document.getElementById('custo').value) || 0;
+  const taxaPedido = parseFloat(document.getElementById('taxaPedido').value) || 0;
+  const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
+  const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
+  const comissao = tipo === 'comum' ? 0.14 : 0.18;
+  const imposto = 0.065;
+
+  const totalPercent = comissao + imposto + percOp + margemDesejada;
+  const precoFinal = (custo + taxaPedido + frete) / (1 - totalPercent);
+
+  // Exibir resultados
+  const resultadoHTML = `
+<div class="result-item">
+<span>Preço Final:</span>
+<span class="result-value">${formatCurrency(precoFinal)}</span>
+</div>
+<div class="result-item">
+<span>Frete (${metodo}):</span>
+<span>${formatCurrency(frete)}</span>
+</div>
+<div class="result-item">
+<span>Margem Líquida:</span>
+<span>${(margemDesejada * 100).toFixed(1)}%</span>
+</div>
+`;
+
+  document.getElementById('resultadoFinal').innerHTML = resultadoHTML;
+
+  // Aviso de frete
+  const avisoFrete = document.getElementById('avisoFrete');
+  if (frete > 0.6 * precoFinal) {
+      avisoFrete.innerHTML = '⚠️ Frete muito alto! Considere revisar o método de envio';
+      avisoFrete.style.display = 'block';
   } else {
-    // Se o preço base for ≥ R$79,90, exibe a área de frete
-    document.getElementById("areaFrete").style.display = "block";
-    document.getElementById("resultadoFinal").innerText =
-      "Após o cálculo do preço base, selecione os dados de frete e clique em 'Calcular Frete e Preço Final'.";
+      avisoFrete.style.display = 'none';
   }
-}
-
-function calcularFrete() {
-  let metodo = document.getElementById("metodoEnvio").value;
-  let intervalo = document.getElementById("intervaloEnvio").value;
-  let frete = shippingFees[intervalo][metodo];
-
-  let finalComum = basePrecoComum + frete - 6.75;
-  let finalPremium = basePrecoPremium + frete - 6.75;
-
-  // Novo formato com destaque para o frete
-  let resultadoFinal =
-    `Preço Final Comum (COM FRETE): R$ ${finalComum.toFixed(2)} ` +
-    `(| Frete: R$ ${frete.toFixed(2)})\n` +
-    `Preço Final Premium (COM FRETE): R$ ${finalPremium.toFixed(2)} ` +
-    `(| Frete: R$ ${frete.toFixed(2)})`;
-
-  document.getElementById("resultadoFinal").innerText = resultadoFinal;
-}
-
-// Abrir o modal
-document.getElementById('openModal').onclick = function () {
-  document.getElementById('modal').style.display = 'block';
-};
-
-// Fechar o modal
-document.querySelector('.close').onclick = function () {
-  document.getElementById('modal').style.display = 'none';
-};
-
-window.onclick = function (event) {
-  if (event.target == document.getElementById('modal')) {
-    document.getElementById('modal').style.display = 'none';
-  }
-};
-
-function calcularCubagem() {
-  const comprimento = parseFloat(document.getElementById('comprimento').value);
-  const largura = parseFloat(document.getElementById('largura').value);
-  const altura = parseFloat(document.getElementById('altura').value);
-  const pesoReal = parseFloat(document.getElementById('peso').value);
-  const cubagem = (comprimento * largura * altura) / 6000;
-  document.getElementById('resultadoCubagem').innerText =
-    `Peso Cubado: ${cubagem.toFixed(2)} kg | Peso Real: ${pesoReal} kg`;
 }
