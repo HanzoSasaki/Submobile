@@ -49,7 +49,8 @@ function calcularBase() {
   const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
   const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
   const comissao = tipo === 'comum' ? 0.14 : 0.18;
-  const imposto = 0.065;
+  const imposto = 0.1008;
+
 
   // Validação
   const totalPercent = comissao + imposto + percOp + margemDesejada;
@@ -81,7 +82,7 @@ function calcularBase() {
   <tr><td>Custo</td><td>${formatCurrency(custo)}</td><td>-</td></tr>
   <tr><td>Taxa Pedido</td><td>${formatCurrency(taxaPedido)}</td><td>-</td></tr>
   <tr><td>Comissão</td><td>${formatCurrency(precoBase * comissao)}</td><td>${(comissao * 100).toFixed(1)}%</td></tr>
-  <tr><td>Impostos</td><td>${formatCurrency(precoBase * imposto)}</td><td>6.5%</td></tr>
+  <tr><td>Impostos</td><td>${formatCurrency(precoBase * imposto)}</td><td>10%</td></tr>
   <tr><td>Operacional</td><td>${formatCurrency(precoBase * percOp)}</td><td>${(percOp * 100).toFixed(1)}%</td></tr>
   <tr><td>Margem Líquida</td><td>${formatCurrency(precoBase * margemDesejada)}</td><td>${(margemDesejada * 100).toFixed(1)}%</td></tr>
 </tbody>
@@ -104,7 +105,8 @@ function calcularComFrete() {
   const percOp = (parseFloat(document.getElementById('percOperacional').value) || 0) / 100;
   const margemDesejada = (parseFloat(document.getElementById('margem').value) || 0) / 100;
   const comissao = tipo === 'comum' ? 0.14 : 0.18;
-  const imposto = 0.065;
+  const imposto = 0.1008;
+
 
   const totalPercent = comissao + imposto + percOp + margemDesejada;
   const precoFinal = (custo + taxaPedido + frete) / (1 - totalPercent);
